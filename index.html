@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Code Progress Tracker</title>
+  
+  <!-- Google Fonts - Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Overlay for mobile sidebar -->
+  <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+  
+  <div id="app">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+      <div class="sidebar-header" onclick="navigateTo('dashboard')">
+        <span class="material-icons logo-icon">code</span>
+        <span class="logo-text">CodeTracker</span>
+      </div>
+      
+      <nav class="sidebar-nav">
+        <a class="nav-item active" data-page="dashboard" onclick="navigateTo('dashboard')">
+          <span class="material-icons">dashboard</span>
+          <span>Dashboard</span>
+        </a>
+        <a class="nav-item" data-page="skills" onclick="navigateTo('skills')">
+          <span class="material-icons">psychology</span>
+          <span>Skills</span>
+        </a>
+        <a class="nav-item" data-page="courses" onclick="navigateTo('courses')">
+          <span class="material-icons">school</span>
+          <span>Courses</span>
+        </a>
+        <a class="nav-item" data-page="projects" onclick="navigateTo('projects')">
+          <span class="material-icons">folder</span>
+          <span>Projects</span>
+        </a>
+        <a class="nav-item" data-page="resources" onclick="navigateTo('resources')">
+          <span class="material-icons">library_books</span>
+          <span>Resources</span>
+        </a>
+        <a class="nav-item" data-page="journal" onclick="navigateTo('journal')">
+          <span class="material-icons">edit_note</span>
+          <span>Journal</span>
+        </a>
+        <a class="nav-item" data-page="achievements" onclick="navigateTo('achievements')">
+          <span class="material-icons">emoji_events</span>
+          <span>Achievements</span>
+        </a>
+        <a class="nav-item" data-page="calendar" onclick="navigateTo('calendar')">
+          <span class="material-icons">calendar_month</span>
+          <span>Calendar</span>
+        </a>
+        <a class="nav-item" data-page="analytics" onclick="navigateTo('analytics')">
+          <span class="material-icons">analytics</span>
+          <span>Analytics</span>
+        </a>
+        <a class="nav-item" data-page="settings" onclick="navigateTo('settings')">
+          <span class="material-icons">settings</span>
+          <span>Settings</span>
+        </a>
+      </nav>
+      
+      <div class="sidebar-footer">
+        <div id="userContainer" class="user-info" style="display: none;">
+          <div class="user-avatar">
+            <span class="material-icons">person</span>
+          </div>
+          <div class="user-details">
+            <span class="user-name" id="sidebarUserName">User</span>
+            <span class="user-email" id="sidebarUserEmail" style="font-size: 0.75rem; color: var(--text-muted);">user@example.com</span>
+          </div>
+          <button class="btn btn-sm btn-outline" onclick="handleLogout()" title="Logout" style="margin-left: auto;">
+            <span class="material-icons" style="font-size: 18px;">logout</span>
+          </button>
+        </div>
+        <div id="authContainer" class="user-info">
+          <div class="user-avatar">
+            <span class="material-icons">person</span>
+          </div>
+          <div class="user-details">
+            <span class="user-name">Guest</span>
+            <span class="user-level" style="cursor: pointer; color: var(--primary);" onclick="window.location.href='login.html'">Login to sync</span>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+      <!-- Top Bar -->
+      <header class="top-bar">
+        <div class="top-bar-left">
+          <button class="menu-toggle" onclick="toggleSidebar()">
+            <span class="material-icons">menu</span>
+          </button>
+          <h1 class="page-title" id="pageTitle">Dashboard</h1>
+        </div>
+        <div class="top-bar-right">
+          <button class="icon-btn theme-toggle" onclick="toggleTheme()" title="Toggle theme">
+            <span class="material-icons" id="themeIcon">light_mode</span>
+          </button>
+          <button class="btn btn-primary" onclick="showQuickAdd()">
+            <span class="material-icons" style="font-size: 18px;">add</span>
+            Quick Add
+          </button>
+        </div>
+      </header>
+
+      <!-- Page Content Container -->
+      <div class="page-container" id="pageContainer">
+        Loading...
+      </div>
+    </main>
+  </div>
+
+  <!-- Quick Add Modal -->
+  <dialog id="quickAddModal" class="custom-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5>Quick Add</h5>
+        <button class="btn-close" onclick="closeModal('quickAddModal')">
+          <span class="material-icons">close</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="quick-add-options">
+          <button class="quick-add-btn" onclick="navigateTo('skills'); closeModal('quickAddModal'); setTimeout(showAddSkillModal, 300);">
+            <span class="material-icons">psychology</span>
+            <span>New Skill</span>
+          </button>
+          <button class="quick-add-btn" onclick="navigateTo('projects'); closeModal('quickAddModal'); setTimeout(showAddProjectModal, 300);">
+            <span class="material-icons">folder</span>
+            <span>New Project</span>
+          </button>
+          <button class="quick-add-btn" onclick="navigateTo('resources'); closeModal('quickAddModal'); setTimeout(showAddResourceModal, 300);">
+            <span class="material-icons">library_books</span>
+            <span>New Resource</span>
+          </button>
+          <button class="quick-add-btn" onclick="navigateTo('journal'); closeModal('quickAddModal'); setTimeout(showAddEntryModal, 300);">
+            <span class="material-icons">edit_note</span>
+            <span>Journal Entry</span>
+          </button>
+          <button class="quick-add-btn" onclick="logActivity(); closeModal('quickAddModal');">
+            <span class="material-icons">timer</span>
+            <span>Log Activity</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- Chart.js (REQUIRED for charts) -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+  
+  <script src="firebase-config.js"></script>
+  <script src="auth.js"></script>
+  <script src="store.js"></script>
+  <script src="pages.js"></script>
+  <script src="modules.js"></script>
+  <script src="router.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

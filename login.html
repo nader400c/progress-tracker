@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CodeTracker - Login</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .auth-page {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, var(--bg-body) 0%, var(--bg-gradient) 100%);
+      padding: 20px;
+    }
+    
+    .auth-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      padding: 40px;
+      width: 100%;
+      max-width: 420px;
+      box-shadow: var(--shadow-lg);
+    }
+    
+    .auth-logo {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    
+    .auth-logo .material-icons {
+      font-size: 56px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .auth-logo h1 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-top: 10px;
+    }
+    
+    .auth-tabs {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+    
+    .auth-tab {
+      flex: 1;
+      padding: 12px;
+      text-align: center;
+      background: var(--bg-hover);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 600;
+      color: var(--text-secondary);
+      transition: all 0.2s;
+    }
+    
+    .auth-tab.active {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+      border-color: var(--primary);
+    }
+    
+    .auth-form {
+      display: none;
+    }
+    
+    .auth-form.active {
+      display: block;
+    }
+    
+    .btn-full {
+      width: 100%;
+      justify-content: center;
+      padding: 14px;
+      font-size: 1rem;
+    }
+    
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 24px 0;
+      color: var(--text-muted);
+    }
+    
+    .divider::before,
+    .divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border-color);
+    }
+    
+    .alert {
+      border-radius: 10px;
+      margin-bottom: 16px;
+    }
+    
+    .back-link {
+      text-align: center;
+      margin-top: 20px;
+      color: var(--text-muted);
+    }
+    
+    .back-link a {
+      color: var(--primary);
+      text-decoration: none;
+    }
+    
+    .back-link a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="auth-page">
+    <div class="auth-card">
+      <div class="auth-logo">
+        <span class="material-icons">code</span>
+        <h1>CodeTracker</h1>
+        <p class="text-muted">Track your coding progress</p>
+      </div>
+      
+      <div class="auth-tabs">
+        <div class="auth-tab active" onclick="showForm('login')">Login</div>
+        <div class="auth-tab" onclick="showForm('signup')">Sign Up</div>
+      </div>
+      
+      <div id="alertContainer"></div>
+      
+      <!-- Login Form -->
+      <form id="loginForm" class="auth-form active" onsubmit="handleLogin(event)">
+        <div class="form-group">
+          <label class="form-label">Email</label>
+          <input type="email" class="form-control" id="loginEmail" placeholder="you@example.com" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Password</label>
+          <input type="password" class="form-control" id="loginPassword" placeholder="••••••••" required>
+        </div>
+        <button type="submit" class="btn btn-primary btn-full">
+          <span class="material-icons">login</span>
+          Login
+        </button>
+        <div class="text-center mt-3">
+          <a href="#" onclick="showForm('reset')" style="color: var(--primary); text-decoration: none; font-size: 0.9rem;">
+            Forgot password?
+          </a>
+        </div>
+      </form>
+      
+      <!-- Signup Form -->
+      <form id="signupForm" class="auth-form" onsubmit="handleSignup(event)">
+        <div class="form-group">
+          <label class="form-label">Name</label>
+          <input type="text" class="form-control" id="signupName" placeholder="John Doe" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email</label>
+          <input type="email" class="form-control" id="signupEmail" placeholder="you@example.com" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Password</label>
+          <input type="password" class="form-control" id="signupPassword" placeholder="At least 6 characters" minlength="6" required>
+        </div>
+        <button type="submit" class="btn btn-primary btn-full">
+          <span class="material-icons">person_add</span>
+          Create Account
+        </button>
+      </form>
+      
+      <!-- Reset Password Form -->
+      <form id="resetForm" class="auth-form" onsubmit="handleReset(event)">
+        <div class="form-group">
+          <label class="form-label">Email</label>
+          <input type="email" class="form-control" id="resetEmail" placeholder="you@example.com" required>
+        </div>
+        <button type="submit" class="btn btn-primary btn-full">
+          <span class="material-icons">email</span>
+          Send Reset Link
+        </button>
+        <div class="text-center mt-3">
+          <a href="#" onclick="showForm('login')" style="color: var(--primary); text-decoration: none; font-size: 0.9rem;">
+            Back to Login
+          </a>
+        </div>
+      </form>
+
+      <div class="divider">or continue with</div>
+
+      <button class="btn btn-outline btn-full" onclick="handleGoogleSignIn()" style="margin-bottom: 12px;">
+        <svg style="width: 20px; height: 20px; margin-right: 8px;" viewBox="0 0 24 24">
+          <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+          <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+          <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+          <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+        </svg>
+        Sign in with Google
+      </button>
+
+      <div class="divider">or</div>
+
+      <button class="btn btn-outline btn-full" onclick="continueAsGuest()">
+        <span class="material-icons">person_outline</span>
+        Continue as Guest
+      </button>
+      
+      <div class="back-link">
+        <a href="index.html">← Back to App</a>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+  
+  <script src="firebase-config.js"></script>
+  <script src="auth.js"></script>
+  
+  <script>
+    // Show/hide forms
+    function showForm(form) {
+      document.querySelectorAll('.auth-form').forEach(f => f.classList.remove('active'));
+      document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
+      
+      if (form === 'login') {
+        document.getElementById('loginForm').classList.add('active');
+        document.querySelectorAll('.auth-tab')[0].classList.add('active');
+      } else if (form === 'signup') {
+        document.getElementById('signupForm').classList.add('active');
+        document.querySelectorAll('.auth-tab')[1].classList.add('active');
+      } else if (form === 'reset') {
+        document.getElementById('resetForm').classList.add('active');
+      }
+    }
+    
+    // Show alert
+    function showAlert(message, type = 'danger') {
+      const container = document.getElementById('alertContainer');
+      container.innerHTML = `
+        <div class="alert alert-${type}" role="alert">
+          ${message}
+        </div>
+      `;
+    }
+
+    // Handle Google Sign-In
+    async function handleGoogleSignIn() {
+      const result = await Auth.signInWithGoogle();
+      if (result.success) {
+        window.location.href = 'index.html';
+      } else {
+        showAlert(result.error);
+      }
+    }
+
+    // Handle login
+    async function handleLogin(e) {
+      e.preventDefault();
+      const email = document.getElementById('loginEmail').value;
+      const password = document.getElementById('loginPassword').value;
+      
+      const result = await Auth.signIn(email, password);
+      
+      if (result.success) {
+        window.location.href = 'index.html';
+      } else {
+        showAlert(result.error);
+      }
+    }
+    
+    // Handle signup
+    async function handleSignup(e) {
+      e.preventDefault();
+      const name = document.getElementById('signupName').value;
+      const email = document.getElementById('signupEmail').value;
+      const password = document.getElementById('signupPassword').value;
+      
+      const result = await Auth.signUp(email, password, name);
+      
+      if (result.success) {
+        window.location.href = 'index.html';
+      } else {
+        showAlert(result.error);
+      }
+    }
+    
+    // Handle password reset
+    async function handleReset(e) {
+      e.preventDefault();
+      const email = document.getElementById('resetEmail').value;
+      
+      const result = await Auth.resetPassword(email);
+      
+      if (result.success) {
+        showAlert('Password reset email sent! Check your inbox.', 'success');
+      } else {
+        showAlert(result.error);
+      }
+    }
+    
+    // Continue as guest
+    function continueAsGuest() {
+      localStorage.setItem('codeProgressGuest', 'true');
+      window.location.href = 'index.html';
+    }
+    
+    // Check if already logged in
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        window.location.href = 'index.html';
+      }
+    });
+  </script>
+</body>
+</html>
