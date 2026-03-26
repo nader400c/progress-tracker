@@ -1,22 +1,24 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Code Progress Tracker</title>
-  
+  <link rel="icon" type="image/x-icon" href="Group.png">
   <!-- Google Fonts - Inter -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  
+
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
   <!-- Overlay for mobile sidebar -->
   <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
-  
+
   <div id="app">
     <!-- Sidebar Navigation -->
     <aside class="sidebar">
@@ -24,7 +26,7 @@
         <span class="material-icons logo-icon">code</span>
         <span class="logo-text">CodeTracker</span>
       </div>
-      
+
       <nav class="sidebar-nav">
         <a class="nav-item active" data-page="dashboard" onclick="navigateTo('dashboard')">
           <span class="material-icons">dashboard</span>
@@ -67,7 +69,7 @@
           <span>Settings</span>
         </a>
       </nav>
-      
+
       <div class="sidebar-footer">
         <div id="userContainer" class="user-info" style="display: none;">
           <div class="user-avatar">
@@ -75,7 +77,8 @@
           </div>
           <div class="user-details">
             <span class="user-name" id="sidebarUserName">User</span>
-            <span class="user-email" id="sidebarUserEmail" style="font-size: 0.75rem; color: var(--text-muted);">user@example.com</span>
+            <span class="user-email" id="sidebarUserEmail"
+              style="font-size: 0.75rem; color: var(--text-muted);">user@example.com</span>
           </div>
           <button class="btn btn-sm btn-outline" onclick="handleLogout()" title="Logout" style="margin-left: auto;">
             <span class="material-icons" style="font-size: 18px;">logout</span>
@@ -87,7 +90,8 @@
           </div>
           <div class="user-details">
             <span class="user-name">Guest</span>
-            <span class="user-level" style="cursor: pointer; color: var(--primary);" onclick="window.location.href='login.html'">Login to sync</span>
+            <span class="user-level" style="cursor: pointer; color: var(--primary);"
+              onclick="window.location.href='login.html'">Login to sync</span>
           </div>
         </div>
       </div>
@@ -132,19 +136,23 @@
       </div>
       <div class="modal-body">
         <div class="quick-add-options">
-          <button class="quick-add-btn" onclick="navigateTo('skills'); closeModal('quickAddModal'); setTimeout(showAddSkillModal, 300);">
+          <button class="quick-add-btn"
+            onclick="navigateTo('skills'); closeModal('quickAddModal'); setTimeout(showAddSkillModal, 300);">
             <span class="material-icons">psychology</span>
             <span>New Skill</span>
           </button>
-          <button class="quick-add-btn" onclick="navigateTo('projects'); closeModal('quickAddModal'); setTimeout(showAddProjectModal, 300);">
+          <button class="quick-add-btn"
+            onclick="navigateTo('projects'); closeModal('quickAddModal'); setTimeout(showAddProjectModal, 300);">
             <span class="material-icons">folder</span>
             <span>New Project</span>
           </button>
-          <button class="quick-add-btn" onclick="navigateTo('resources'); closeModal('quickAddModal'); setTimeout(showAddResourceModal, 300);">
+          <button class="quick-add-btn"
+            onclick="navigateTo('resources'); closeModal('quickAddModal'); setTimeout(showAddResourceModal, 300);">
             <span class="material-icons">library_books</span>
             <span>New Resource</span>
           </button>
-          <button class="quick-add-btn" onclick="navigateTo('journal'); closeModal('quickAddModal'); setTimeout(showAddEntryModal, 300);">
+          <button class="quick-add-btn"
+            onclick="navigateTo('journal'); closeModal('quickAddModal'); setTimeout(showAddEntryModal, 300);">
             <span class="material-icons">edit_note</span>
             <span>Journal Entry</span>
           </button>
@@ -164,7 +172,7 @@
   <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
-  
+
   <script src="firebase-config.js"></script>
   <script src="auth.js"></script>
   <script src="store.js"></script>
@@ -173,4 +181,5 @@
   <script src="router.js"></script>
   <script src="app.js"></script>
 </body>
+
 </html>
